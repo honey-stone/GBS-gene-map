@@ -10,15 +10,17 @@ work_dir=$(cat work_dir_path.txt)
 
 input_dir=${work_dir}/VCF
 gene_map_dir=${work_dir}/gene_map
-mkdir ${gene_map_dir}/quality_filter
-mkdir ${gene_map_dir}/vcf_preparing
+mkdir -p ${gene_map_dir}/quality_filter
+mkdir -p ${gene_map_dir}/vcf_preparing
+mkdir -p ${gene_map_dir}/vcf_prefaring/zip_vxf
 
 cd ${input_dir}
 
 for file in *.vcf
 	do
-	mkdir ${gene_map_dir}/quality_filter/${file}
-	output_dir=${gene_map_dir}/quality_filter/${file}
+ 	# Создание папки для каждого файла, сбор статистки по качеству
+	mkdir ${gene_map_dir}/quality_filter/${file}_dir
+	output_dir=${gene_map_dir}/quality_filter/${file}_dir
 	bcftools stats ${file} > ${output_dir}/${file}.txt
 	
 	# Фильтрация по качеству картирования (MQ>10)
@@ -34,9 +36,11 @@ for file in *.vcf
 	bcftools filter -e '(FORMAT/AD[0:1] / FORMAT/AD[0:0]) < 0.5' ${file}_AD.vcf > ${file}_ALT-REF.vcf
 	bcftools stats ${file}_ALT-REF.vcf > ${file}_ALT-REF.txt
 
-	# Архивирование и создание csi индекса
-	bgzip -c ${file}_ALT-REF.vcf > ${gene_map_dir}/vcf_preparing/zip_vcf/${file}_ALT-REF.vcf.gz
-	tabix -p vcf -C ${gene_map_dir}/vcf_preparing/zip_vcf/${file}_ALT-REF.vcf.gz
+	mv ${file}_ALT-REF.vcf ${file}
+ 
+	# Архивирование и создание csi индекса (для дальнейшего объединения файлов)
+	bgzip -c ${file} > ${gene_map_dir}/vcf_preparing/zip_vcf/${file}.gz
+	tabix -p vcf -C ${gene_map_dir}/vcf_preparing/zip_vcf/${file}.gz
 
 	cd ${input_dir}	
 
