@@ -26,10 +26,10 @@ for CHR in '1H', '2H', '3H', '4H', '5H', '6H', '7H':
   R = map[map['GT'] == 'R']
   D = map[map['GT'] == 'D']
     
-  r = ax.scatter(R['POS'], [y] * len(R), color='yellowgreen', marker='|', linewidth=0.5, s=200)  # CHOSING COLOR FOR RECIPIENT SNP
-  d = ax.scatter(D['POS'], [y] * len(D), color='tomato', marker='|', linewidth=0.3, s=200)   # CHOSING COLOR FOR 'DONOR' SNP
+  r = ax.scatter(R['POS'], [y] * len(R), color='yellowgreen', marker='|', linewidth=0.5, s=200)  # CHOSING COLOR FOR RECIPIENT SNP (R)
+  d = ax.scatter(D['POS'], [y] * len(D), color='tomato', marker='|', linewidth=0.3, s=200)   # CHOSING COLOR FOR DONOR SNP (D)
 
-  if CHR == '4H': #choosing chromosome where region of interest is located
+  if CHR == '4H': # choosing chromosome where region of interest is located
     region_name = 'HvMyc2'
     region_start = 507301407
     region_end = 507302689
