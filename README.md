@@ -41,12 +41,12 @@ It consists of the following steps
 The final TSV file contains columns 'CHROM' 'POS' 'REF' 'ALT' 'SAMPLES'.
 
 Output example:
-'''
+```
 CHR     POS     REF     ALT     RECIPIENT       DONOR   NIL
 1H      50230   C       .       0/0     0/0     0/0
 1H      50231   G       A       1/1     0/0     1/1
 1H      50232   G       T       1/1     0/0     1/1
-'''
+```
 
 #### 3. gene_map.sh
 This script executes python scripts gene_map.py, gene_map_N.py, chr_split.py
@@ -59,10 +59,12 @@ Compares the genotype of the NIL to the genotypes of parents
 The result is a CSV table with columns 'CHR' 'POS' 'GT' where R, D or N is specified for each nucleotide position. This is actually a gene map :)
 	
 Output example:
+```
 CHR,POS,GT
 1H,50230,N
 1H,50231,R
 1H,50232,R
+```
 
 ##### 3.2 gene_map_N.py
 Removes all Non-polymorfic sites from CSV gene map and keep only polymorfic positions.
@@ -72,8 +74,8 @@ Splits a CSV gene map by chromosomes.
 
 #### 4. gene_map_png.sh
 This script executes python script visualise_gene_map.py
-!!! copy these sh- and py-scripts to the directory where the CSV gene maps for individual chromosomes are located.
+!!! **copy these sh- and py-scripts to the directory where the CSV gene maps for individual chromosomes are located.*
 
 ##### 4.1 visualise_gene_map.py
 Creates a png picture of your gene map.
-You can add a region of interest on a picture by specifying the chromosome where this region is located, the start and end point, and the name of the region. 
+You can add a region of interest (gene, locus etc) on a picture by specifying the chromosome where this region is located, the start and end point, and the name of the region. 
